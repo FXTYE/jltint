@@ -240,6 +240,11 @@ p{margin:0 0 1em; color:var(--grey);}
 .check-list li{display:flex; align-items:center; gap:8px; font-size:.94rem; color:var(--silver);}
 .check-list .icon{width:18px; height:18px; color:var(--orange);}
 
+/* ---------- Recent work (real install photos, landscape) ---------- */
+.work-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:18px;}
+.work-grid .work-item{aspect-ratio:4/3;}
+.work-grid .work-item:first-child{grid-column:span 2; grid-row:span 2; aspect-ratio:auto;}
+
 /* ---------- Gallery ---------- */
 .gallery-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:18px;}
 .gallery-item{position:relative; border:1px solid var(--line); border-radius:var(--radius); overflow:hidden; padding:0; background:var(--panel); aspect-ratio:2/3;}
@@ -411,6 +416,7 @@ p{margin:0 0 1em; color:var(--grey);}
   .subservice-grid{grid-template-columns:1fr;}
   .why-grid{grid-template-columns:repeat(2,1fr);}
   .gallery-grid{grid-template-columns:repeat(2,1fr);}
+  .work-grid{grid-template-columns:repeat(2,1fr);}
   .footer-inner{grid-template-columns:1fr 1fr; row-gap:36px;}
 }
 
@@ -432,6 +438,8 @@ p{margin:0 0 1em; color:var(--grey);}
   .service-grid{grid-template-columns:1fr;}
   .why-grid{grid-template-columns:1fr;}
   .gallery-grid{grid-template-columns:repeat(2,1fr);}
+  .work-grid{grid-template-columns:1fr;}
+  .work-grid .work-item:first-child{grid-column:auto; grid-row:auto; aspect-ratio:4/3;}
   .field-row{grid-template-columns:1fr;}
   .service-choice-grid{grid-template-columns:repeat(2,1fr);}
   .quote-box{padding:26px 20px;}
