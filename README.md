@@ -178,6 +178,23 @@ globally (for the ambient background decoration in other sections);
 This one cost real debugging time to track down — don't remove it without
 re-testing the scroll effect.
 
+### Mobile: Back/Next/Submit bar pinned as a fixed footer
+
+The quote form's `<form id="quoteForm">` is a flex column with two children:
+a scrollable content area (`.quote-modal-scroll`, `flex:1; min-height:0;
+overflow-y:auto`) holding the eyebrow/title/progress/step fieldsets, and
+`.q-nav` (Back/Next/Submit) as a sibling *after* it that's never inside the
+scrolling area. This replaced an earlier structure where `.q-nav` was the
+last element inside the scrollable content, which on real mobile Safari
+(both the top URL bar and bottom toolbar visible at once — not reproducible
+in this project's headless test setup) could leave the Next button sitting
+below the visible viewport with no way to scroll to it. Pinning it as a
+genuine footer means the primary action is always on-screen regardless of
+step content length or exactly how much chrome the mobile browser is
+showing — the same "stop relying on precise scroll math" fix already used
+for the close button (the `transform:none` fix documented in the mobile
+`.quote-modal-panel` block in `css/style.css`).
+
 ## Content notes
 
 - Phone number, Facebook handle, service pricing and package details were taken

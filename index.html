@@ -506,23 +506,22 @@
   <div class="quote-modal-backdrop" id="quoteModalBackdrop"></div>
   <div class="quote-box quote-modal-panel" role="dialog" aria-modal="true" aria-labelledby="quoteModalTitle">
     <button class="quote-modal-close" id="quoteModalClose" aria-label="Close quote form"><svg class="icon"><use href="#icon-close"/></svg></button>
-    <div class="quote-modal-scroll">
-      <p class="eyebrow"><span class="eyebrow-dot"></span>Let's Bring Your Vision to Life</p>
-      <h2 id="quoteModalTitle" class="quote-modal-title">Get a Free Quote</h2>
-      <p class="q-step-sub quote-modal-sub">Tell us about your project in a few quick steps. Add photos of your vehicle for the most accurate quote.</p>
+    <form id="quoteForm" class="quote-form" novalidate>
+      <input type="text" name="company" class="hp-field" tabindex="-1" autocomplete="off" aria-hidden="true">
+      <div class="quote-modal-scroll">
+        <p class="eyebrow"><span class="eyebrow-dot"></span>Let's Bring Your Vision to Life</p>
+        <h2 id="quoteModalTitle" class="quote-modal-title">Get a Free Quote</h2>
+        <p class="q-step-sub quote-modal-sub">Tell us about your project in a few quick steps. Add photos of your vehicle for the most accurate quote.</p>
 
-      <div class="quote-progress" id="quoteProgress">
-        <div class="qp-track"><div class="qp-fill" id="qpFill"></div></div>
-        <ol class="qp-steps">
-          <li class="qp-step is-active" data-step="1"><span class="qp-num">1</span><span class="qp-label">Project</span></li>
-          <li class="qp-step" data-step="2"><span class="qp-num">2</span><span class="qp-label">Vehicle</span></li>
-          <li class="qp-step" data-step="3"><span class="qp-num">3</span><span class="qp-label">Contact</span></li>
-          <li class="qp-step" data-step="4"><span class="qp-num">4</span><span class="qp-label">Review</span></li>
-        </ol>
-      </div>
-
-      <form id="quoteForm" class="quote-form" novalidate>
-        <input type="text" name="company" class="hp-field" tabindex="-1" autocomplete="off" aria-hidden="true">
+        <div class="quote-progress" id="quoteProgress">
+          <div class="qp-track"><div class="qp-fill" id="qpFill"></div></div>
+          <ol class="qp-steps">
+            <li class="qp-step is-active" data-step="1"><span class="qp-num">1</span><span class="qp-label">Project</span></li>
+            <li class="qp-step" data-step="2"><span class="qp-num">2</span><span class="qp-label">Vehicle</span></li>
+            <li class="qp-step" data-step="3"><span class="qp-num">3</span><span class="qp-label">Contact</span></li>
+            <li class="qp-step" data-step="4"><span class="qp-num">4</span><span class="qp-label">Review</span></li>
+          </ol>
+        </div>
 
         <!-- STEP 1 -->
         <fieldset class="q-step is-active" data-step="1">
@@ -691,15 +690,15 @@
           <p>We'll be in touch within one business day. Need it sooner? Call us on <a href="tel:+61431338149">0431 338 149</a>.</p>
         </div>
         <p class="field-error" id="submitError">Something went wrong sending your request — please call us on <a href="tel:+61431338149">0431 338 149</a> instead.</p>
+      </div>
 
-        <div class="q-nav">
-          <button type="button" class="btn btn-outline" id="qBack">Back</button>
-          <span class="q-step-indicator"><span id="qCurrentStep">1</span> of 4</span>
-          <button type="button" class="btn btn-primary" id="qNext">Next <svg class="icon"><use href="#icon-arrow-right"/></svg></button>
-          <button type="submit" class="btn btn-primary" id="qSubmit" hidden>Send Quote Request <svg class="icon"><use href="#icon-arrow-right"/></svg></button>
-        </div>
-      </form>
-    </div>
+      <div class="q-nav">
+        <button type="button" class="btn btn-outline" id="qBack">Back</button>
+        <span class="q-step-indicator"><span id="qCurrentStep">1</span> of 4</span>
+        <button type="button" class="btn btn-primary" id="qNext">Next <svg class="icon"><use href="#icon-arrow-right"/></svg></button>
+        <button type="submit" class="btn btn-primary" id="qSubmit" hidden>Send Quote Request <svg class="icon"><use href="#icon-arrow-right"/></svg></button>
+      </div>
+    </form>
   </div>
 </div>
 
