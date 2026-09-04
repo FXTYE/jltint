@@ -99,7 +99,17 @@ npm run dev                # wrangler pages dev — serves the site + /api/quote
 
 The hero, the Window Tint section and the CTA band use vehicles that have had
 their background removed, so they sit *in* the dark page rather than looking
-like photos pasted on it. Each one is composed of three layers
+like photos pasted on it.
+
+Current cut-outs:
+
+| File | Where | Source |
+|---|---|---|
+| `gt3rs.webp` | Hero | Stock photo — **not** JL Tint's work |
+| `g63.webp` | CTA band | Stock photo — **not** JL Tint's work. Number plate blacked out. |
+| `patrol.webp` | Window Tint section | JL Tint's own install |
+| `urus.webp` | *unused spare* | Stock photo. Front is cropped in the original, so it only works bleeding off a page edge. |
+ Each one is composed of three layers
 (`.vehicle-stage` in the CSS): a warm radial glow behind, the transparent
 cut-out itself with a silhouette drop-shadow, and an elliptical contact
 shadow so it reads as standing on a floor. In the hero and CTA band a
@@ -134,3 +144,11 @@ and roof racks occasionally pick up a sliver of the shed behind them.
   placeholder — update it to the real JL Tint page URL.
 - Gallery images are real install photos supplied by the shop. Check each new
   one for visible number plates before publishing (one has been blurred).
+- **Stock vs. own work.** The hero and CTA band use stock photos of premium cars
+  as brand/mood imagery. Everything that makes a claim about JL Tint's work —
+  the Recent Work gallery and the Window Tint section — uses the shop's own
+  installs, and should stay that way.
+- **Keep the licence record for the stock photos.** They need a licence that
+  permits commercial use (Unsplash and Pexels both do, with no attribution
+  required). Save the source URL and licence for each one somewhere you can
+  find it later; stock agencies do chase unlicensed use on business sites.
