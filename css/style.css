@@ -446,8 +446,29 @@ body.modal-open{overflow:hidden;}
 .quote-modal-close .icon{width:18px; height:18px;}
 
 @media (max-width:640px){
-  .quote-modal{padding:0;}
-  .quote-modal-panel{max-width:100%; max-height:100vh; height:100vh; border-radius:0;}
+  .quote-modal{padding:0; align-items:flex-start;}
+  .quote-modal-panel{
+    max-width:100%; border-radius:0;
+    /* 100vh is the *largest* possible mobile viewport (address bar hidden) —
+       taller than what's actually visible when the bar is showing, which
+       pushed this panel's top (and the close button) off-screen. 100dvh
+       tracks the real visible height; keep 100vh only as a fallback for
+       browsers that don't support dvh. */
+    height:100vh;
+    height:100dvh;
+    max-height:100vh;
+    max-height:100dvh;
+    /* No transform anywhere in this element on mobile: a transformed
+       ancestor traps position:fixed descendants into behaving like
+       position:absolute relative to itself (same trap the header's
+       backdrop-filter caused earlier). Killing it here lets the close
+       button below use real position:fixed, so it stays reachable even
+       if this height math is ever wrong again on some mobile browser. */
+    transform:none;
+  }
+  .quote-modal.is-open .quote-modal-panel{transform:none;}
+  /* Anchored to the real viewport, not the panel. */
+  .quote-modal-close{position:fixed; top:max(16px, env(safe-area-inset-top, 16px)); right:16px;}
   .quote-modal-scroll{padding:72px 22px 28px;}
 }
 
