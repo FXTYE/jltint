@@ -222,7 +222,8 @@
   <!-- ============ VEHICLE WRAPS ============ -->
   <section class="section" id="wraps">
     <div class="container">
-      <div class="split">
+      <div class="wraps-scroll-stage" id="wrapsScrollStage">
+      <div class="split split-sticky">
         <div class="split-copy reveal">
           <p class="eyebrow"><span class="eyebrow-dot"></span>Custom Colour Change Vinyl Wraps</p>
           <h2>Transform Your Ride.<br>Express Your Style.</h2>
@@ -237,15 +238,21 @@
           <a href="#quote" class="btn btn-primary" data-quote-service="Colour Change Wrap">Get a Wrap Quote <svg class="icon"><use href="#icon-arrow-right"/></svg></a>
         </div>
         <div class="split-media reveal">
-          <div class="spec-panel glow-card">
-            <div class="spec-panel-badge"><svg class="icon"><use href="#icon-sparkle"/></svg></div>
-            <div class="spec-stats">
-              <div class="spec-stat"><strong>Endless</strong><span>Colours &amp; Finishes</span></div>
-              <div class="spec-stat"><strong>100%</strong><span>Paint-Safe &amp; Reversible</span></div>
-              <div class="spec-stat"><strong>Expert</strong><span>Installation</span></div>
+          <div class="color-shift" id="colorShift" aria-hidden="true">
+            <div class="vehicle-glow"></div>
+            <div class="vehicle-floor"></div>
+            <img src="assets/img/cutouts/huracan.webp" alt="" class="color-shift-car" id="colorShiftCar" width="1500" height="664">
+            <div class="color-shift-badge">
+              <span class="color-shift-swatch" id="colorShiftSwatch"></span>
+              <span id="colorShiftLabel">Gloss Orange</span>
             </div>
           </div>
+          <div class="color-shift-control">
+            <span class="color-shift-hint" id="colorShiftHint">Scroll or drag to preview colours</span>
+            <input type="range" class="color-shift-slider" id="colorShiftSlider" min="0" max="1000" value="0" aria-label="Preview wrap colours">
+          </div>
         </div>
+      </div>
       </div>
 
       <div class="subservice-grid">

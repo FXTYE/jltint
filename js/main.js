@@ -153,6 +153,82 @@
     );
   }
 
+  /* ---------------- Wraps colour-change scroll/slider effect ---------------- */
+  var wrapsStage = document.getElementById("wrapsScrollStage");
+  var colorShiftCar = document.getElementById("colorShiftCar");
+  var colorShiftSwatch = document.getElementById("colorShiftSwatch");
+  var colorShiftLabel = document.getElementById("colorShiftLabel");
+  var colorShiftSlider = document.getElementById("colorShiftSlider");
+  var colorShiftHint = document.getElementById("colorShiftHint");
+
+  if (wrapsStage && colorShiftCar && colorShiftSwatch && colorShiftLabel) {
+    var COLOR_STOPS = [
+      { deg: 0, name: "Gloss Orange" },
+      { deg: 55, name: "Lime Green" },
+      { deg: 120, name: "Emerald Green" },
+      { deg: 185, name: "Electric Blue" },
+      { deg: 250, name: "Deep Purple" },
+      { deg: 320, name: "Candy Pink" },
+      { deg: 360, name: "Gloss Orange" },
+    ];
+    var reduceMotion =
+      window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    var hintDismissed = false;
+
+    function dismissColorShiftHint() {
+      if (hintDismissed || !colorShiftHint) return;
+      hintDismissed = true;
+      colorShiftHint.classList.add("is-dismissed");
+    }
+
+    function setColorProgress(p) {
+      p = Math.max(0, Math.min(1, p));
+      var scaled = p * (COLOR_STOPS.length - 1);
+      var i = Math.min(Math.floor(scaled), COLOR_STOPS.length - 2);
+      var frac = scaled - i;
+      var a = COLOR_STOPS[i];
+      var b = COLOR_STOPS[i + 1];
+      var deg = a.deg + (b.deg - a.deg) * frac;
+      colorShiftCar.style.filter = "hue-rotate(" + deg + "deg) drop-shadow(0 26px 32px rgba(0,0,0,.55))";
+      colorShiftSwatch.style.filter = "hue-rotate(" + deg + "deg)";
+      colorShiftLabel.textContent = COLOR_STOPS[Math.round(scaled)].name;
+      if (colorShiftSlider) colorShiftSlider.value = Math.round(p * 1000);
+    }
+
+    if (!reduceMotion) {
+      var stageTicking = false;
+      function updateColorFromScroll() {
+        stageTicking = false;
+        if (window.innerWidth <= 1080) return;
+        var rect = wrapsStage.getBoundingClientRect();
+        var total = rect.height - window.innerHeight;
+        var p = total > 0 ? -rect.top / total : 0;
+        setColorProgress(p);
+        if (p > 0.02) dismissColorShiftHint();
+      }
+      window.addEventListener(
+        "scroll",
+        function () {
+          if (!stageTicking) {
+            stageTicking = true;
+            requestAnimationFrame(updateColorFromScroll);
+          }
+        },
+        { passive: true }
+      );
+      updateColorFromScroll();
+    }
+
+    if (colorShiftSlider) {
+      colorShiftSlider.addEventListener("input", function () {
+        setColorProgress(colorShiftSlider.value / 1000);
+        dismissColorShiftHint();
+      });
+    }
+
+    setColorProgress(0);
+  }
+
   /* ---------------- Count-up price numbers ---------------- */
   if ("IntersectionObserver" in window) {
     var countObserver = new IntersectionObserver(

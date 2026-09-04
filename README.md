@@ -116,9 +116,15 @@ Current cut-outs:
 |---|---|---|
 | `gt3rs.webp` | Hero | Stock photo — **not** JL Tint's work |
 | `g63.webp` | CTA band | Stock photo — **not** JL Tint's work. Number plate blacked out. |
+| `huracan.webp` | Wraps colour-change effect (see below) | Stock photo — **not** JL Tint's work |
 | `patrol.webp` | Window Tint section | JL Tint's own install |
 | `urus.webp` | *unused spare* | Stock photo. Front is cropped in the original, so it only works bleeding off a page edge. |
- Each one is composed of three layers
+| `urus-yellow.webp` | *unused spare* | Stock photo. Number plate blacked out. |
+| `sto-purple.webp` | *unused spare* | Stock photo, front-on angle (not side/¾ like the rest). |
+| `sian-olive.webp` | *unused spare* | Stock photo. Rembg kept a sliver of a red car from the busy motor-show background behind it — clean up before using. |
+
+The last three are saved for a possible future "colour options" gallery —
+nothing currently links to them. Each one is composed of three layers
 (`.vehicle-stage` in the CSS): a warm radial glow behind, the transparent
 cut-out itself with a silhouette drop-shadow, and an elliptical contact
 shadow so it reads as standing on a floor. In the hero and CTA band a
@@ -144,6 +150,33 @@ out.crop(out.getbbox()).save('assets/img/cutouts/yourcar.webp', 'WEBP', quality=
 
 Check the result on a dark background before shipping it — reflective panels
 and roof racks occasionally pick up a sliver of the shed behind them.
+
+## Wraps colour-change effect
+
+The Vehicle Wraps section replaces the old static icon panel with a live
+demo: the Huracán cuts through a curated set of wrap colours (`COLOR_STOPS`
+in `js/main.js`) via CSS `hue-rotate`, which only reads as a real colour
+change on paint that already has strong saturation — this is why it's the
+one saturated-colour stock photo in the set rather than a light or black car
+(hue-rotate can't shift hue that isn't there).
+
+Two ways to drive it, both wired to the same `setColorProgress()` function:
+
+- **Desktop (>1080px):** scroll-scrubbed. The section becomes a tall
+  (`240vh`) scroll track with the split pinned via `position: sticky` while
+  colour advances with scroll position — see `.wraps-scroll-stage` /
+  `.split-sticky` in the CSS.
+- **Everywhere:** a draggable slider under the car
+  (`#colorShiftSlider`), which is the only control on mobile/tablet and a
+  manual override on desktop.
+
+**If you add `overflow` to the `#wraps` section for any reason, position:
+sticky will silently stop working.** `.section` sets `overflow:hidden`
+globally (for the ambient background decoration in other sections);
+`#wraps{overflow:visible}` opts this section back out because an
+`overflow:hidden` ancestor breaks `position:sticky` for anything inside it.
+This one cost real debugging time to track down — don't remove it without
+re-testing the scroll effect.
 
 ## Content notes
 
