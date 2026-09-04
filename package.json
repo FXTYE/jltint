@@ -1,0 +1,16 @@
+{
+  "name": "jltint-website",
+  "private": true,
+  "version": "1.0.0",
+  "description": "JL Tint marketing site (static) with a Cloudflare Pages Function backing the quote form.",
+  "scripts": {
+    "dev": "wrangler pages dev . --d1=DB=jltint-leads",
+    "deploy": "wrangler pages deploy . --project-name=jltint",
+    "d1:migrate:local": "wrangler d1 migrations apply jltint-leads --local",
+    "d1:migrate:remote": "wrangler d1 migrations apply jltint-leads --remote",
+    "d1:query:remote": "wrangler d1 execute jltint-leads --remote --command \"select id, created_at, full_name, phone, email, services from leads order by created_at desc limit 20\""
+  },
+  "devDependencies": {
+    "wrangler": "^4.0.0"
+  }
+}

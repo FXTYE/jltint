@@ -1,0 +1,22 @@
+name = "jltint"
+compatibility_date = "2026-08-01"
+pages_build_output_dir = "."
+
+# Lead storage for the "Get a Quote" form (functions/api/quote.js).
+# Binding name "DB" must match the name used in wrangler pages deploy /
+# the Cloudflare dashboard's Pages > Settings > Functions > D1 bindings.
+[[d1_databases]]
+binding = "DB"
+database_name = "jltint-leads"
+database_id = "c667fc48-e1c0-4c47-848d-8c3019d8b58f"
+
+# Photo attachments. R2 isn't enabled on this account yet (one-time toggle
+# in the Cloudflare dashboard under R2 > Enable R2). Once it is, create a
+# bucket (e.g. `wrangler r2 bucket create jltint-quote-photos`), uncomment
+# this block with the bucket name, and add the same binding in the Pages
+# project's dashboard settings (Settings > Functions > R2 bindings) if the
+# project is Git-connected. The form/API already work without it — photo
+# metadata is still recorded, just not the file bytes.
+# [[r2_buckets]]
+# binding = "PHOTOS"
+# bucket_name = "jltint-quote-photos"

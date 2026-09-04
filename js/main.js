@@ -4,16 +4,12 @@
   /* ============================================================
      CONFIG — quote form delivery
      ------------------------------------------------------------
-     Submissions are sent via FormSubmit.co (no backend/signup
-     required). Replace the address below with the real inbox
-     that should receive quote requests. The FIRST submission to
-     a new address triggers a one-time confirmation email from
-     FormSubmit.co — click the link in that email to activate
-     delivery before going live.
-     https://formsubmit.co/
+     Submissions post to /api/quote, a Cloudflare Pages Function
+     (functions/api/quote.js) that writes each lead to a D1
+     database. See that file's header comment for how photo
+     storage (R2) and future email notifications plug in.
   ============================================================ */
-  var QUOTE_FORM_EMAIL = "quotes@jltint.com.au";
-  var QUOTE_ENDPOINT = "https://formsubmit.co/ajax/" + QUOTE_FORM_EMAIL;
+  var QUOTE_ENDPOINT = "/api/quote";
 
   var MAX_PHOTOS = 5;
   var MAX_PHOTO_MB = 8;
@@ -409,9 +405,6 @@
     qSubmit.textContent = "Sending…";
 
     var fd = new FormData(form);
-    fd.append("_subject", "New quote request — JL Tint website");
-    fd.append("_captcha", "false");
-    fd.append("_template", "table");
 
     fetch(QUOTE_ENDPOINT, {
       method: "POST",
@@ -419,14 +412,18 @@
       body: fd,
     })
       .then(function (res) {
-        if (!res.ok) throw new Error("Request failed");
-        return res.json();
+        return res.json().then(function (data) {
+          if (!res.ok || !data.success) throw new Error(data.error || "Request failed");
+          return data;
+        });
       })
       .then(function () {
         form.classList.add("is-submitted");
         qSuccess.classList.add("is-active");
       })
-      .catch(function () {
+      .catch(function (err) {
+        var prefix = err && err.message ? err.message + " " : "Something went wrong sending your request — ";
+        submitError.innerHTML = prefix + 'please call us on <a href="tel:+61431338149">0431 338 149</a> instead.';
         submitError.style.display = "block";
         qSubmit.disabled = false;
         qSubmit.innerHTML = 'Send Quote Request <svg class="icon"><use href="#icon-arrow-right"/></svg>';
