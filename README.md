@@ -11,7 +11,8 @@ wraps, commercial/shop front wraps, and paint protection film), built for
 index.html          Single-page site (nav, hero, service sections, gallery, quote form, footer)
 css/style.css        Design system + responsive styles
 js/main.js            Nav, scroll reveal, gallery lightbox, multi-step quote form
-assets/img/           Optimised images sourced from the JL Tint brand artwork/flyers
+assets/img/           Optimised photos of real installs
+assets/img/cutouts/   Background-removed vehicle PNG/WebP cut-outs (see below)
 functions/api/quote.js  Pages Function — receives quote submissions, writes to D1
 migrations/           D1 schema (leads table)
 wrangler.toml          Pages project config + D1 (and future R2) bindings
@@ -94,11 +95,42 @@ npm run d1:migrate:local   # creates the leads table in a local D1 copy
 npm run dev                # wrangler pages dev — serves the site + /api/quote
 ```
 
+## Vehicle cut-outs
+
+The hero, the Window Tint section and the CTA band use vehicles that have had
+their background removed, so they sit *in* the dark page rather than looking
+like photos pasted on it. Each one is composed of three layers
+(`.vehicle-stage` in the CSS): a warm radial glow behind, the transparent
+cut-out itself with a silhouette drop-shadow, and an elliptical contact
+shadow so it reads as standing on a floor. In the hero and CTA band a
+left-hand gradient scrim (`.hero-scrim` / `.cta-scrim`) melts the vehicle
+into the same background the text sits on.
+
+The cut-outs were generated from the originals in `assets/img/work/` with
+[rembg](https://github.com/danielgatis/rembg) (u2net model, alpha matting on).
+To add more:
+
+```
+pip install rembg onnxruntime
+python3 -c "
+from rembg import remove, new_session
+from PIL import Image
+s = new_session('u2net')
+im = Image.open('assets/img/work/YOURCAR.jpg').convert('RGB')
+out = remove(im, session=s, alpha_matting=True, alpha_matting_foreground_threshold=270,
+             alpha_matting_background_threshold=20, alpha_matting_erode_size=11)
+out.crop(out.getbbox()).save('assets/img/cutouts/yourcar.webp', 'WEBP', quality=88, method=6)
+"
+```
+
+Check the result on a dark background before shipping it — reflective panels
+and roof racks occasionally pick up a sliver of the shed behind them.
+
 ## Content notes
 
 - Phone number, Facebook handle, service pricing and package details were taken
   directly from the supplied JL Tint marketing artwork.
 - The Facebook link in the header/footer points to `facebook.com` as a
   placeholder — update it to the real JL Tint page URL.
-- Gallery images are the supplied promotional flyers/brand art; swap in real
-  install photos as they become available.
+- Gallery images are real install photos supplied by the shop. Check each new
+  one for visible number plates before publishing (one has been blurred).
