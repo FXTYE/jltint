@@ -81,6 +81,21 @@
     });
   }
 
+  /* ---------------- Mobile sticky CTA (hide while the hero's own CTA is on screen) ---------------- */
+  var mobileCta = document.querySelector(".mobile-quote-cta");
+  var heroCta = document.querySelector(".hero-actions a[href=\"#quote\"]");
+  if (mobileCta && heroCta && "IntersectionObserver" in window) {
+    var mobileCtaObserver = new IntersectionObserver(
+      function (entries) {
+        entries.forEach(function (entry) {
+          mobileCta.classList.toggle("is-hidden", entry.isIntersecting);
+        });
+      },
+      { threshold: 0, rootMargin: "0px 0px -20% 0px" }
+    );
+    mobileCtaObserver.observe(heroCta);
+  }
+
   /* ---------------- Cursor-glow cards ---------------- */
   if (window.matchMedia && window.matchMedia("(hover: hover)").matches) {
     document.querySelectorAll(".glow-card").forEach(function (card) {

@@ -543,7 +543,8 @@ body.modal-open{overflow:hidden;}
   box-shadow:0 14px 34px -8px rgba(242,98,26,.55);
   transition:opacity .2s ease, transform .2s ease, visibility .2s ease;
 }
-body.modal-open .mobile-quote-cta{opacity:0; transform:translateY(14px); visibility:hidden; pointer-events:none;}
+body.modal-open .mobile-quote-cta,
+.mobile-quote-cta.is-hidden{opacity:0; transform:translateY(14px); visibility:hidden; pointer-events:none;}
 
 /* ============================================================
    REVEAL ANIMATION
