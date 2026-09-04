@@ -69,15 +69,24 @@ The repo has no build step (`pages_build_output_dir = "."` in
 `wrangler.toml`), so either deploy path works:
 
 **Option A — Git integration (recommended, auto-deploys on push):**
-1. Cloudflare dashboard → **Workers & Pages** → **Create** → **Pages** →
-   **Connect to Git** → select this repo/branch.
-2. Build command: *(none)*. Build output directory: `/`.
-3. **Settings → Functions → D1 database bindings** → add `DB` → `jltint-leads`.
-   (This is required — Git-connected Pages builds don't automatically read
-   `wrangler.toml` bindings.)
-4. Deploy. The form will work immediately at the generated `*.pages.dev` URL.
-5. Add a custom domain later under **Custom domains** once jltint's domain is
+1. Cloudflare dashboard → **Workers & Pages** → **Create application** →
+   **Pages** tab → **Import an existing Git repository** → pick `FXTYE/jltint`
+   → **Begin setup**.
+2. Production branch: `claude/business-website-quote-form-mfdvw1` (currently the
+   repo's default branch, so it should already be selected).
+   Build command: **leave empty**. Build output directory: `/`.
+3. **Save and Deploy** → the site goes live at `<project>.pages.dev`.
+4. Add the database binding: project → **Settings** → **Bindings** → **Add** →
+   **D1 database binding**. Variable name `DB`, database `jltint-leads`.
+5. **Redeploy** (Deployments → latest → Retry deployment). Bindings only take
+   effect on a new deployment — until then `/api/quote` will 500 because
+   `env.DB` is undefined.
+6. Add a custom domain later under **Custom domains** once jltint's domain is
    on Cloudflare.
+
+Note: Cloudflare now steers new projects toward Workers static assets rather
+than Pages. Pages is still supported and this project is already shaped for it
+(`functions/` file-based routing), so there's no reason to migrate right now.
 
 **Option B — CLI:**
 ```
